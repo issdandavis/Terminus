@@ -23,5 +23,38 @@
 <body>
 <div id="term"></div>
 <div id="pics"><img id="scene"></img></div>
+<aside id="assistant">
+  <div class="assistant-header">
+    <div class="assistant-title">Guild Clerk</div>
+    <div class="assistant-subtitle">Command assistant</div>
+  </div>
+  <section class="assistant-panel">
+    <h2>Now</h2>
+    <div id="assistant-location">Room: Home</div>
+    <div id="assistant-next">Next: type <code>ls</code></div>
+  </section>
+  <section class="assistant-panel">
+    <h2>Here</h2>
+    <div class="assistant-list-title">Locations</div>
+    <ul id="assistant-locations"></ul>
+    <div class="assistant-list-title">Items</div>
+    <ul id="assistant-items"></ul>
+  </section>
+  <section class="assistant-panel">
+    <h2>Commands</h2>
+    <ul class="command-list">
+      <li><code>ls</code> lists places and items.</li>
+      <li><code>cd Place</code> moves to a place.</li>
+      <li><code>cd ..</code> moves back.</li>
+      <li><code>less Item</code> reads or talks to an item.</li>
+      <li><code>pwd</code> shows where you are.</li>
+      <li><code>help</code>, <code>commands</code>, or <code>hint</code> gives help.</li>
+    </ul>
+  </section>
+  <section class="assistant-panel">
+    <h2>Guild Tutorial</h2>
+    <ol id="tutorial-steps"></ol>
+  </section>
+</aside>
 </body>
 </html>
