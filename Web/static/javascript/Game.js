@@ -61,7 +61,11 @@ var man_pages = {"cd": "The old man's voice echoes in your head as if from a gre
 "(tellme combo) tells you the combination for the AthenaCluster rooms at MIT.\n"+
 "Command Input:\n"+
 "tellme combo\n"+
-"Rememberrrrrr..."}
+"Rememberrrrrr...",
+"solve": "Use solve to answer an enemy problem in MathArena.\n" +
+"Command Input:\n" +
+"solve EnemyName answer\n" +
+"Example: solve LinearEquationEnemy 4"}
 
 var command_aliases = {
     "look": "ls",
@@ -72,10 +76,18 @@ var command_aliases = {
     "speak": "less",
     "where": "pwd",
     "go": "cd",
-    "move": "cd"
+    "move": "cd",
+    "enter": "cd"
 };
 
-var global_help_commands = ["commands", "hint", "tutorial", "guild", "bank", "house"];
+var global_help_commands = ["commands", "hint", "tutorial", "guild", "guilds", "bank", "house", "math"];
+
+var math_enemy_answers = {
+    "LinearEquationEnemy": "4",
+    "BinaryMaskEnemy": "1000",
+    "HexCarryEnemy": "0x10",
+    "ProofGateEnemy": "B"
+};
 
 var tutorial_steps = [
     {id: "survey", command: "ls", text: "Survey the room with ls."},
@@ -83,8 +95,13 @@ var tutorial_steps = [
     {id: "forest", command: "cd WesternForest", text: "Travel to WesternForest."},
     {id: "sign", command: "less Sign", text: "Read signs and people with less Item."},
     {id: "academy", command: "cd SpellCastingAcademy", text: "Join the Guild path at the academy."},
-    {id: "lessons", command: "cd Lessons", text: "Take Lessons to learn mv."},
-    {id: "mountains", command: "cd ~/NorthernMeadow/EasternMountains", text: "Find the OldMan for the main field manual."},
+    {id: "district", command: "cd ~/GuildDistrict", text: "Enter the code guild district."},
+    {id: "directory", command: "less GuildDirectory", text: "Read the language guild directory."},
+    {id: "binary", command: "cd BinaryGuild", text: "Visit an advanced representation guild."},
+    {id: "mathguild", command: "cd ../AdvancedMathematicsGuild", text: "Enter the advanced mathematics guild."},
+    {id: "arena", command: "cd MathArena", text: "Treat math problems as enemies."},
+    {id: "solve", command: "solve LinearEquationEnemy 4", text: "Defeat the first math enemy."},
+    {id: "lessons", command: "cd ~/WesternForest/SpellCastingAcademy/Lessons", text: "Take Lessons to learn mv."},
     {id: "market", command: "reach Marketplace", text: "Later: reach Marketplace and read mkdirSpell for the guild office build lane."},
     {id: "bank", command: "touch AccountLedger", text: "Bank account model: create an AccountLedger where touch is available."},
     {id: "house", command: "mkdir House", text: "Housing path: when mkdir is learned, create House at Clearing."}
@@ -214,7 +231,34 @@ function parseInput(input){
 
 function currentHint(){
     if (current_room.room_name === "Home"){
-        return "Try ls, then less WelcomeLetter, then cd WesternForest.";
+        return "Try ls, then cd GuildDistrict for language guilds or cd WesternForest for the original path.";
+    }
+    if (current_room.room_name === "GuildDistrict"){
+        return "Read less GuildDirectory, then enter a guild like cd PythonGuild, cd BinaryGuild, or cd AdvancedMathematicsGuild.";
+    }
+    if (current_room.room_name === "PythonGuild"){
+        return "Use less Board and less StarterContract. This guild maps intent to readable executable functions.";
+    }
+    if (current_room.room_name === "JavaScriptGuild"){
+        return "Use less Board and less EventLoopDiagram. This guild maps commands to events and interface updates.";
+    }
+    if (current_room.room_name === "RustGuild"){
+        return "Use less Board. This guild trains ownership, boundaries, and collision control.";
+    }
+    if (current_room.room_name === "HaskellGuild"){
+        return "Use less Board. This guild trains pure transformations and type-shaped reasoning.";
+    }
+    if (current_room.room_name === "BinaryGuild"){
+        return "Use less Board and less BitMaskTrial. Binary problems become exact bit enemies.";
+    }
+    if (current_room.room_name === "HexadecimalGuild"){
+        return "Use less Board and less ByteTrial. Hex problems become compact byte enemies.";
+    }
+    if (current_room.room_name === "AdvancedMathematicsGuild"){
+        return "Use less Board, then cd MathArena to solve enemies.";
+    }
+    if (current_room.room_name === "MathArena"){
+        return "Use less LinearEquationEnemy, then solve LinearEquationEnemy 4. Try BinaryMaskEnemy, HexCarryEnemy, and ProofGateEnemy too.";
     }
     if (current_room.room_name === "WesternForest"){
         return "Use less Sign, then cd SpellCastingAcademy.";
@@ -247,18 +291,33 @@ function helpText(command){
             "cd ~                return Home\n" +
             "pwd                 print where you are\n" +
             "man Command         show the old command manual\n" +
+            "guilds              list language and advanced guilds\n" +
+            "math                explain math enemies\n" +
+            "solve Enemy answer  answer a MathArena enemy\n" +
             "hint                get the next practical action\n\n" +
             "Friendly aliases also work: look=ls, read=less, go=cd, back=cd ..";
     }
     if (command === "tutorial" || command === "guild"){
         return "Guild tutorial path:\n" +
             "1. ls\n" +
-            "2. less WelcomeLetter\n" +
-            "3. cd WesternForest\n" +
-            "4. less Sign\n" +
-            "5. cd SpellCastingAcademy\n" +
-            "6. cd Lessons and less Professor\n\n" +
-            "That joins the academy/guild lane and teaches the core command spells.";
+            "2. cd GuildDistrict\n" +
+            "3. less GuildDirectory\n" +
+            "4. cd PythonGuild or cd JavaScriptGuild for normal code guilds\n" +
+            "5. cd BinaryGuild or cd HexadecimalGuild for representation guilds\n" +
+            "6. cd AdvancedMathematicsGuild, then cd MathArena\n" +
+            "7. less LinearEquationEnemy, then solve LinearEquationEnemy 4\n\n" +
+            "This turns code languages into guilds and math problems into solvable enemies.";
+    }
+    if (command === "guilds"){
+        return "Available guilds:\n" +
+            "PythonGuild - readable automation and scripts\n" +
+            "JavaScriptGuild - browser tools and event loops\n" +
+            "RustGuild - ownership and compiled systems\n" +
+            "HaskellGuild - types and pure transforms\n" +
+            "BinaryGuild - bits, masks, and exact representation\n" +
+            "HexadecimalGuild - bytes and compact machine notation\n" +
+            "AdvancedMathematicsGuild - equations, proofs, and MathArena enemies\n\n" +
+            "From Home, use cd GuildDistrict. From there, use cd GuildName.";
     }
     if (command === "bank"){
         return "Guild bank model:\n" +
@@ -268,7 +327,34 @@ function helpText(command){
         return "Housing path:\n" +
             "Reach Marketplace, read mkdirSpell, then use mkdir House when the command becomes available. At Clearing, mkdir House settles the local housing objective.";
     }
+    if (command === "math"){
+        return "Math enemies:\n" +
+            "A problem is represented as an enemy with givens, a target, allowed moves, and a win condition.\n" +
+            "Use less EnemyName to inspect it.\n" +
+            "Use solve EnemyName answer to defeat it.\n" +
+            "Start with cd GuildDistrict, cd AdvancedMathematicsGuild, cd MathArena.";
+    }
     return currentHint();
+}
+
+function solveEnemy(args){
+    if (args.length < 2){
+        return "Use solve EnemyName answer. Example: solve LinearEquationEnemy 4";
+    }
+    if (current_room.room_name !== "MathArena"){
+        return "Math enemies are fought in MathArena. Use cd GuildDistrict, cd AdvancedMathematicsGuild, then cd MathArena.";
+    }
+    var enemy = bestNameMatch(args[0], Object.keys(math_enemy_answers));
+    if (!enemy){
+        return "No math enemy named " + args[0] + " is active here.";
+    }
+    var answer = args.slice(1).join("").toString();
+    var expected = math_enemy_answers[enemy];
+    if (answer.toLowerCase() === expected.toLowerCase()){
+        completed_tutorial_steps.solve = true;
+        return enemy + " defeated. Answer " + expected + " matched the win condition.";
+    }
+    return enemy + " resisted. Expected a different answer. Use less " + enemy + " to inspect the givens and allowed moves.";
 }
 
 function updateTutorialProgress(input, parsed){
@@ -287,6 +373,21 @@ function updateTutorialProgress(input, parsed){
     }
     if (parsed.command === "cd" && current_room.room_name === "SpellCastingAcademy"){
         completed_tutorial_steps.academy = true;
+    }
+    if (parsed.command === "cd" && current_room.room_name === "GuildDistrict"){
+        completed_tutorial_steps.district = true;
+    }
+    if (parsed.command === "less" && parsed.args[0] === "GuildDirectory"){
+        completed_tutorial_steps.directory = true;
+    }
+    if (parsed.command === "cd" && current_room.room_name === "BinaryGuild"){
+        completed_tutorial_steps.binary = true;
+    }
+    if (parsed.command === "cd" && current_room.room_name === "AdvancedMathematicsGuild"){
+        completed_tutorial_steps.mathguild = true;
+    }
+    if (parsed.command === "cd" && current_room.room_name === "MathArena"){
+        completed_tutorial_steps.arena = true;
     }
     if (parsed.command === "cd" && current_room.room_name === "Lessons"){
         completed_tutorial_steps.lessons = true;
@@ -369,6 +470,12 @@ $(document).ready(function() {
             updateAssistant();
             return;
         }
+        if (command === "solve" || command === "attack"){
+            term.echo(solveEnemy(args));
+            updateTutorialProgress(input, parsed);
+            updateAssistant();
+            return;
+        }
         var guidance = commandGuidance(command, args);
         if (guidance){
             term.echo(guidance);
@@ -421,7 +528,7 @@ $(document).ready(function() {
 		"Move to a new location with the command \"cd LOCATION\" \n" +
 		"You can backtrack with the command \"cd ..\". \n" +
 		"Interact with things in the world with the command \"less ITEM\" \n" +
-        "You can also type \"commands\", \"hint\", \"guild\", \"bank\", or \"house\".\n\n" +
+        "You can also type \"commands\", \"hint\", \"guilds\", \"math\", \"bank\", or \"house\".\n\n" +
         "If you forget where you are, type \"pwd\" \n\n" + 
 		"Go ahead, explore. Do ls as your first command. The Guild Clerk sidebar will help.\n",
         exit: false,                        // Disable 'exit' command

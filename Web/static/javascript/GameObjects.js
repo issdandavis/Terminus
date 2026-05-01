@@ -1855,6 +1855,151 @@ the locker. MIT is making updates to the locker at all times, so check back \
 frequently.", "item_comingsoon.gif");
 MagicLocker.addItem(MoreComing);
 
+//GUILD DISTRICT
+var GuildDistrict = new Room("GuildDistrict",
+    "A practical training district for code, number systems, and command work. Each guild \
+teaches a different way to shape a problem before you solve it.",
+    "loc_square.gif");
+GuildDistrict.addItem(new Item("GuildDirectory",
+    "Guild District directory:\n\n" +
+    "PythonGuild - readable automation and scripting.\n" +
+    "JavaScriptGuild - browser tools, event loops, and web systems.\n" +
+    "RustGuild - ownership, safety, and compiled systems.\n" +
+    "HaskellGuild - types, functions, and formal structure.\n" +
+    "BinaryGuild - bits, masks, and low-level representation.\n" +
+    "HexadecimalGuild - compact machine notation and byte reading.\n" +
+    "AdvancedMathematicsGuild - algebra, proofs, geometry, and enemy problems.\n\n" +
+    "Use cd GuildName to enter a guild. Use less Board inside each guild.",
+    "item_manuscript.gif"));
+GuildDistrict.addItem(new Item("GuildClerk",
+    "The clerk says: pick one guild, read its Board, then enter MathArena when you want \
+problems to fight back as command-line challenges. Use solve EnemyName answer when you \
+know the answer.",
+    "item_TA.gif"));
+
+var PythonGuild = new Room("PythonGuild",
+    "Rows of worktables hold scripts, notebooks, and small automation contracts.",
+    "loc_classroom.gif");
+PythonGuild.addItem(new Item("Board",
+    "PythonGuild path:\n\n" +
+    "Core idea: make the intent readable, then make it executable.\n" +
+    "Starter drill: represent a task as input -> transform -> output.\n" +
+    "Guild habit: write the simplest function, test it, then generalize.",
+    "item_manuscript.gif"));
+PythonGuild.addItem(new Item("StarterContract",
+    "Contract: write a function that takes a list of numbers and returns the total. \
+In game terms, list the inputs, name the transform, and state the output before coding.",
+    "item_manuscript.gif"));
+
+var JavaScriptGuild = new Room("JavaScriptGuild",
+    "A web workshop filled with event boards, browser panes, and interface sketches.",
+    "loc_stata.gif");
+JavaScriptGuild.addItem(new Item("Board",
+    "JavaScriptGuild path:\n\n" +
+    "Core idea: state changes over time. Events enter, handlers transform, UI updates.\n" +
+    "Starter drill: button click -> function call -> visible result.\n" +
+    "Guild habit: keep state named and keep side effects obvious.",
+    "item_manuscript.gif"));
+JavaScriptGuild.addItem(new Item("EventLoopDiagram",
+    "Think of each command as an event. The terminal reads it, the game routes it, \
+and the visible world updates from the result.",
+    "item_manuscript.gif"));
+
+var RustGuild = new Room("RustGuild",
+    "A forge for strict systems work. Every tool has an owner and every route has a boundary.",
+    "loc_academy.gif");
+RustGuild.addItem(new Item("Board",
+    "RustGuild path:\n\n" +
+    "Core idea: ownership prevents accidental collision.\n" +
+    "Starter drill: decide who owns data, who borrows it, and when it can change.\n" +
+    "Guild habit: make invalid states hard to express.",
+    "item_manuscript.gif"));
+
+var HaskellGuild = new Room("HaskellGuild",
+    "A quiet hall of type maps, equations, and function chains.",
+    "loc_library.gif");
+HaskellGuild.addItem(new Item("Board",
+    "HaskellGuild path:\n\n" +
+    "Core idea: describe transformations cleanly before execution.\n" +
+    "Starter drill: turn a problem into pure functions.\n" +
+    "Guild habit: compose small correct pieces.",
+    "item_manuscript.gif"));
+
+var BinaryGuild = new Room("BinaryGuild",
+    "A low-level guild where every switch is either open or closed.",
+    "loc_darkroom.gif");
+BinaryGuild.addItem(new Item("Board",
+    "BinaryGuild path:\n\n" +
+    "Core idea: every machine structure can be lowered to bits.\n" +
+    "Starter drill: 1010 + 0011 = 1101.\n" +
+    "Guild habit: check carries, masks, and exact width.",
+    "item_manuscript.gif"));
+BinaryGuild.addItem(new Item("BitMaskTrial",
+    "Enemy problem: BinaryMaskEnemy asks for 1010 AND 1100. \
+Use solve BinaryMaskEnemy 1000 in MathArena.",
+    "item_manuscript.gif"));
+
+var HexadecimalGuild = new Room("HexadecimalGuild",
+    "A compact notation guild where bytes are read as paired symbols.",
+    "loc_stata.gif");
+HexadecimalGuild.addItem(new Item("Board",
+    "HexadecimalGuild path:\n\n" +
+    "Core idea: hex is compact binary. One hex digit equals four bits.\n" +
+    "Starter drill: 0x0F + 0x01 = 0x10.\n" +
+    "Guild habit: translate hex to binary when the shape is unclear.",
+    "item_manuscript.gif"));
+HexadecimalGuild.addItem(new Item("ByteTrial",
+    "Enemy problem: HexCarryEnemy asks for 0x0F + 0x01. \
+Use solve HexCarryEnemy 0x10 in MathArena.",
+    "item_manuscript.gif"));
+
+var AdvancedMathematicsGuild = new Room("AdvancedMathematicsGuild",
+    "A training hall where equations are treated like opponents with known constraints.",
+    "loc_portalroom.gif");
+AdvancedMathematicsGuild.addItem(new Item("Board",
+    "AdvancedMathematicsGuild path:\n\n" +
+    "Core idea: a math problem is an enemy because it has state, rules, weak points, \
+and a win condition.\n" +
+    "Starter drill: identify givens, target, allowed moves, and proof of defeat.\n" +
+    "Use cd MathArena to practice.",
+    "item_manuscript.gif"));
+AdvancedMathematicsGuild.addItem(new Item("EnemyMethod",
+    "Enemy method:\n\n" +
+    "1. less EnemyName to inspect the problem.\n" +
+    "2. Break it into givens, target, and allowed move.\n" +
+    "3. solve EnemyName answer.\n" +
+    "A correct answer clears the enemy pattern.",
+    "item_manuscript.gif"));
+
+var MathArena = new Room("MathArena",
+    "A problem arena. The enemies here are equations, conversions, and logic gates.",
+    "loc_practiceroom.gif");
+MathArena.addItem(new Item("LinearEquationEnemy",
+    "Enemy: LinearEquationEnemy\n" +
+    "Problem: solve 2x + 6 = 14.\n" +
+    "Target: x.\n" +
+    "Allowed move: subtract 6, then divide by 2.\n" +
+    "Command: solve LinearEquationEnemy 4",
+    "item_manuscript.gif"));
+MathArena.addItem(new Item("BinaryMaskEnemy",
+    "Enemy: BinaryMaskEnemy\n" +
+    "Problem: 1010 AND 1100.\n" +
+    "Target: four-bit binary result.\n" +
+    "Command: solve BinaryMaskEnemy 1000",
+    "item_manuscript.gif"));
+MathArena.addItem(new Item("HexCarryEnemy",
+    "Enemy: HexCarryEnemy\n" +
+    "Problem: 0x0F + 0x01.\n" +
+    "Target: hexadecimal result.\n" +
+    "Command: solve HexCarryEnemy 0x10",
+    "item_manuscript.gif"));
+MathArena.addItem(new Item("ProofGateEnemy",
+    "Enemy: ProofGateEnemy\n" +
+    "Problem: if A implies B, and A is true, what must be true?\n" +
+    "Target: B.\n" +
+    "Command: solve ProofGateEnemy B",
+    "item_manuscript.gif"));
+
 /**
 * LINKS BETWEEN ROOMS
 * Fulfill parent/child relationships between rooms
@@ -1866,6 +2011,7 @@ function link_rooms(parentRoom, childRoom){if (!(childRoom in parentRoom.childre
 
 // LEVEL 1 LINKS
 link_rooms(Home, WesternForest);
+link_rooms(Home, GuildDistrict);
 link_rooms(WesternForest, SpellCastingAcademy);
 link_rooms(SpellCastingAcademy, PracticeRoom);
 link_rooms(PracticeRoom, Box);
@@ -1889,6 +2035,7 @@ link_rooms(TownSquare, Library);
 link_rooms(TownSquare, RockyPath);
 link_rooms(TownSquare, ArtisanShop);
 link_rooms(TownSquare, BrokenBridge);
+link_rooms(TownSquare, GuildDistrict);
 //link(library, backRoom); 
 // link_rooms(RockyPath, Farm);
 link_rooms(BrokenBridge, Clearing);
@@ -1903,3 +2050,13 @@ link_rooms(KernelFiles, MoreKernelFiles);
 link_rooms(Home, MIT);
 link_rooms(MIT, StataCenter);
 link_rooms(MIT, AthenaCluster);
+
+//GUILD LINKS
+link_rooms(GuildDistrict, PythonGuild);
+link_rooms(GuildDistrict, JavaScriptGuild);
+link_rooms(GuildDistrict, RustGuild);
+link_rooms(GuildDistrict, HaskellGuild);
+link_rooms(GuildDistrict, BinaryGuild);
+link_rooms(GuildDistrict, HexadecimalGuild);
+link_rooms(GuildDistrict, AdvancedMathematicsGuild);
+link_rooms(AdvancedMathematicsGuild, MathArena);
